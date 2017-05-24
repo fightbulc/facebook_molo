@@ -6,7 +6,7 @@
 class FacebookMoLo
   fbCallbackParam: 'fbauthcallback=1'
 
-  constructor: (@facebook, @appId, @scope) ->
+  constructor: (@facebook, @appId, @scope, @rerequest = false) ->
 
   # ---------------------------------------------
 
@@ -40,8 +40,13 @@ class FacebookMoLo
     redirect.search = '?' + queryParams.join('&')
 
     # redirect to FB for authentication
-    window.location.href =
+    href =
       "https://m.facebook.com/dialog/oauth?" +
         "client_id=" + @appId +
         "&scope=" + @scope +
         "&redirect_uri=" + encodeURIComponent(redirect.href)
+
+    # rerequest missing permissions
+    href = href + "&auth_type=rerequest" if @rerequest is true
+
+    window.location.href = href

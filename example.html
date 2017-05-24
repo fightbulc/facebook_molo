@@ -25,7 +25,8 @@
             version: 'v2.8'
         });
 
-        var fbMolo = new FacebookMoLo(FB, '946621778709815', 'public_profile');
+        var fbMolo = new FacebookMoLo(FB, '946621778709815', 'public_profile', true);
+
         var authCallback = function (response)
         {
             console.log('AUTH CALLBACK', response);
