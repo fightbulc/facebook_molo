@@ -13,7 +13,7 @@
     <p>Find the auth response in the console</p>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="facebook-molo.min.js?v=<?= time() ?>"></script>
 
 <script>
