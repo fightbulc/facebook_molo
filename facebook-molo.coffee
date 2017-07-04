@@ -21,12 +21,27 @@ class FacebookMoLo
     redirectUri = window.location.href if redirectUri is null
 
     @facebook.getLoginStatus (authResponse) =>
-      return callback(authResponse) if authResponse && authResponse.status is 'connected'
+      if authResponse && authResponse.status is 'connected'
+        @facebook.api '/me/permissions', (response) =>
+          permissions = {}
+          reLogin = false
 
-      # we need to login first
+          if typeof response.data
+            for item in response.data
+              permissions[item.permission] = item.status if item.status is 'granted'
+
+          for scope in @scope.split(',')
+            reLogin = true if typeof permissions[scope] is 'undefined'
+
+          return callback authResponse if reLogin is false
+
+          @login(redirectUri)
+
+        return
+
       @login(redirectUri)
 
-  # ---------------------------------------------
+# ---------------------------------------------
 
   login: (redirectUri) ->
     # parse redirect uri
